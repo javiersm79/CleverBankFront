@@ -1,10 +1,23 @@
-import logo from "../../assets/logo.png";
 import React from "react";
 
 export default function Login() {
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log("do handleSubmit");
+    };
     return (
         <div>
-            <p className="error-msg">message to show in main app</p>
+            <form className="form" onSubmit={handleSubmit}>
+                <div className="input-group">
+                    <label htmlFor="email">Email</label>
+                    <input type="email" name="email" placeholder="your@email.com" />
+                </div>
+                <div className="input-group">
+                    <label htmlFor="password">Password</label>
+                    <input type="password" name="password" />
+                </div>
+                <button className="primary">ENTRAR--------</button>
+            </form>
         </div>
     )
 }
