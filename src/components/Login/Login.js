@@ -3,9 +3,9 @@ import axios from "axios";
 import {useNavigate} from "react-router-dom";
 
 
-const baseURL = "http://localhost:8888"; //TODO: ENV VAR BASEURL
+const baseURL = "http://localhost:4000"; //TODO: ENV VAR BASEURL
 
-const Login = () => {
+const Login = (props) => {
     let navigate = useNavigate();
 
     const [userInfo, setUserInfo] = useState({ email:"", token: ""});
@@ -30,18 +30,18 @@ const Login = () => {
             .then((response) => {
                 console.log(response.data)
                 setUserInfo(response.data)
-                navigate(`/`);
-
+                navigate(`/accountDetails`);
+                localStorage.setItem('token', response.data.token);
             }).catch((err) => {
-            console.log(err.response.data)
+                alert("Usuario y/o Password incorrectos")
+                localStorage.clear()
+                navigate(`/`)
         })
         return userInfo
     }
 
     return (
             <div>
-                <p>{userInfo.email}</p>
-                <p>{userInfo.token}</p>
                 <form className="form" onSubmit={handleSubmit}>
                     <div className="input-group">
                         <label htmlFor="email">Email</label>

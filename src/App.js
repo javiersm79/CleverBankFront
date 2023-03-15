@@ -4,6 +4,7 @@ import "./App.css";
 import Login from "./components/Login/Login";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import AccountDetails from "./components/AccountDetails/AccountDetails";
+import NavBar from "./components/Common/NavBar/NavBar";
 
 class App extends Component {
   /*save = () => {
@@ -13,13 +14,12 @@ class App extends Component {
   render() {
     return (
         <div className="App">
-          <img src={logo} className="logo" alt="Business view - Reports" />
-            {/*<Login />
-            <button className="primary" onClick={this.save}>Save</button>*/}
+          <img src={logo} className="logo" alt="CleverBank - App" />
+            <NavBar />
             <Router>
                 <Routes>
-                    <Route exact path="/" element={<AccountDetails />} />
-                    <Route path="/login" element={<Login />} />
+                    <Route exact path="/accountDetails" element={<AccountDetails />} />
+                    <Route path="/" element={<Login />} />
                 </Routes>
             </Router>
 
