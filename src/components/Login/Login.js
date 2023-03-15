@@ -3,7 +3,7 @@ import axios from "axios";
 import {useNavigate} from "react-router-dom";
 
 
-const baseURL = "http://localhost:8888";
+const baseURL = "http://localhost:8888"; //TODO: ENV VAR BASEURL
 
 const Login = () => {
     let navigate = useNavigate();
