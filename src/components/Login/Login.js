@@ -1,5 +1,10 @@
 import React from "react";
 //import { Navigate } from "react-router-dom";
+import axios from "axios";
+
+
+//const baseURL = "http://localserver:8888";
+const baseURL = "http://localhost:8888";
 
 class Login extends React.Component {
     state = {
@@ -11,14 +16,30 @@ class Login extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault();
         try {
-            let user = { name:"JJ", rol: "Admin"}
-            //let user = await login(e.target);
+            let user = this.login(e.target);
             this.setState({ user });
         } catch (error) {
             console.log(error)
         }
     };
 
+    login = (e) => {
+        console.log(e)
+        const requestData = {
+            email: e.elements.email.value,
+            password: e.elements.password.value
+        }
+
+        axios
+            .post(baseURL + "/v1/login", requestData)
+            .then((response) => {
+                console.log(response.data)
+
+            }).catch((err) => {
+            console.log(err.response.data)
+        })
+        return { name:"TESTAXIOS", rol: "TESTROL"}
+    }
 
     render () {
         let { user, error } = this.state;
