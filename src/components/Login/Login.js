@@ -1,53 +1,48 @@
-import React from "react";
-//import { Navigate } from "react-router-dom";
+import React, {useState} from "react";
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 
-//const baseURL = "http://localserver:8888";
 const baseURL = "http://localhost:8888";
 
-class Login extends React.Component {
-    state = {
+const Login = () => {
+    let navigate = useNavigate();
 
-        user: { name:"", rol: ""}
+    const [userInfo, setUserInfo] = useState({ email:"", token: ""});
 
-    };
-
-    handleSubmit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         try {
-            let user = this.login(e.target);
-            this.setState({ user });
+            login(e.target);
         } catch (error) {
             console.log(error)
         }
     };
 
-    login = (e) => {
+    const login = (e) => {
         console.log(e)
         const requestData = {
             email: e.elements.email.value,
             password: e.elements.password.value
         }
 
-        axios
-            .post(baseURL + "/v1/login", requestData)
+        axios.post(baseURL + "/v1/login", requestData)
             .then((response) => {
                 console.log(response.data)
+                setUserInfo(response.data)
+                navigate(`/`);
 
             }).catch((err) => {
             console.log(err.response.data)
         })
-        return { name:"TESTAXIOS", rol: "TESTROL"}
+        return userInfo
     }
 
-    render () {
-        let { user, error } = this.state;
-        return (
+    return (
             <div>
-                {error && <p>{error.message}</p>}
-                {user && <p>{user.name}</p>}
-                <form className="form" onSubmit={this.handleSubmit}>
+                <p>{userInfo.email}</p>
+                <p>{userInfo.token}</p>
+                <form className="form" onSubmit={handleSubmit}>
                     <div className="input-group">
                         <label htmlFor="email">Email</label>
                         <input type="email" name="email" placeholder="your@email.com" />
@@ -59,8 +54,7 @@ class Login extends React.Component {
                     <button className="primary">Sing In</button>
                 </form>
             </div>
-        )
-    }
+    )
 
 }
 export default Login
