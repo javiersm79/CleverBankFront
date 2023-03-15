@@ -3,9 +3,9 @@ import axios from "axios";
 import {useNavigate} from "react-router-dom";
 
 
-const baseURL = "http://localhost:4000"; //TODO: ENV VAR BASEURL
+const baseURL = process.env.REACT_APP_API_URL;
 
-const Login = (props) => {
+const Login = () => {
     let navigate = useNavigate();
 
     const [userInfo, setUserInfo] = useState({ email:"", token: ""});
@@ -20,7 +20,6 @@ const Login = (props) => {
     };
 
     const login = (e) => {
-        console.log(e)
         const requestData = {
             email: e.elements.email.value,
             password: e.elements.password.value
@@ -28,7 +27,6 @@ const Login = (props) => {
 
         axios.post(baseURL + "/v1/login", requestData)
             .then((response) => {
-                console.log(response.data)
                 setUserInfo(response.data)
                 navigate(`/accountDetails`);
                 localStorage.setItem('token', response.data.token);
